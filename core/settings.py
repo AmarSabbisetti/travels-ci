@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
-import dj_database_url
-
+#from dotenv import load_dotenv
+#load_dotenv()
+#import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,16 +86,16 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default":dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
-    {
-
-        #"ENGINE": "django.db.backends.sqlite3",
-        #"NAME": BASE_DIR / "db.sqlite3",
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
+""""default":dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
+""""""
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(BASE_DIR, '.env')
@@ -112,7 +111,7 @@ DATABASES = {
         'PORT': os.getenv('DATABASE_PORT'),
     }
 }
-
+"""
 AUTH_USER_MODEL='users.User'
 
 
@@ -155,7 +154,7 @@ MEDIA_URL='/media/'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-    "http://localhost:3002"
+    "http://localhost:3001"
 ]
 
 
