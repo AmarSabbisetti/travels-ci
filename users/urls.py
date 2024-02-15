@@ -23,7 +23,7 @@ from rest_framework_simplejwt.views import (
 
 router=routers.DefaultRouter()
 router.register(r'alldeals',AllUserPackageViewSet,basename='alldeals')
-router.register(r'user/myjourneys',UserPackageViewSet,basename='profile')
+router.register(r'myjourneys',UserPackageViewSet,basename='profile')
 urlpatterns=[
     path('',include(router.urls)),
     path('login/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -33,8 +33,8 @@ urlpatterns=[
     path('login/<str:type>',Login.as_view(),name='login'),
 	#path('logout/', UserLogout.as_view(), name='logout'),
     path('profile',ProfileUpdateView.as_view(),name='usersprofile'),
-    path('add_plan/<int:package>',AddUserPackage.as_view(),name='add_plan'),
-    path('remove_plan/<int:deal_id>',UserPackageDestroy.as_view(),name='delete_plan')
+    path('packages/add_plan/<int:package>',AddUserPackage.as_view(),name='add_plan'),
+    path('packages/remove_plan/<int:deal_id>',UserPackageDestroy.as_view(),name='delete_plan')
     #path('user/plan/<int:package>',UserPackageDetail.as_view(),'update_delete_plan')
     #path('user/myjourneys/', UserPackagesList.as_view(), name='user-packages-list-create'),
 ]

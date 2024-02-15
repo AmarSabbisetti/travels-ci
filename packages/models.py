@@ -40,7 +40,7 @@ class Places(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
     package=models.ForeignKey(Packages,on_delete=models.CASCADE,related_name='places')
-    Img=models.ImageField(gettext_lazy("Image"),upload_to=profile_image_path, default='places/default.jpg')
+    Img=models.ImageField(gettext_lazy("Image"),upload_to=profile_image_path) #default='places/default.jpg')
 
     def __str__(self):
         return self.name

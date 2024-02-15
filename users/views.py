@@ -45,7 +45,7 @@ class Login(APIView):
         
         assert validate_email(data)
         assert validate_password(data)
-        print(data)
+      
         serializer = LoginSerializer(data=data)
         
         try:
@@ -55,7 +55,7 @@ class Login(APIView):
                 user = authenticate(username=data['email'], password=data['password'])
                 print(user)
                 if user:
-                    print(user)
+                    #login(user)
                     if user.is_superuser and kwargs.get('type') == 'admin':
                         
                         token = GenerateUserTokens().generate_user_tokens(user)
@@ -115,13 +115,13 @@ class ProfileUpdateView(APIView):
 
 
 class AddUserPackage(generics.CreateAPIView):
-    #queryset = User_Packages.objects.all()
+    queryset = User_Packages.objects.all()
     serializer_class = UserPackagesSerializer
     permission_classes = [IsAuthenticated_obj]
 
     def perform_create(self,serializer):
         package_id = self.kwargs['package']
-        package = Packages.objects.filter(package_id=package_id).first()
+        package = Packages.objects.filter(id=package_id).first()
         serializer.save(user=self.request.user,package=package)
         return Response(serializer.data)
 

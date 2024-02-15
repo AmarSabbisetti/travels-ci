@@ -48,8 +48,8 @@ class BasicDetailPackageSerializer(serializers.ModelSerializer):
 
 
 class CompletePackagesSerializer(serializers.ModelSerializer):
-    places=PlacesSerializer(many=False)
-    amenities=AmenitiesSerializer(many=False)
+    places=PlacesSerializer(many=True)
+    amenities=AmenitiesSerializer(many=True)
     class Meta:
         model=Packages
         fields=[
@@ -62,5 +62,4 @@ class CompletePackagesSerializer(serializers.ModelSerializer):
             "end_date",
             "slots",
             "places",
-            "amenities"
-        ]
+            "amenities"]

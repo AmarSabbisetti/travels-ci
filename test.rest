@@ -1,11 +1,11 @@
 
-POST http://127.0.0.1:8000/api/packages/ HTTP/1.1
+get http://127.0.0.1:8000/api/myjourneys HTTP/1.1
 content-type: application/json
 #Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDExNzI0LCJpYXQiOjE3MDc5MjUyNjQsImp0aSI6ImFlOTM1ZWFhOTBjNzQwOTU5NDUzY2JhMWVlOWMxNDA4IiwidXNlcl9pZCI6MX0.31KDSk1qnPqTu-MS2d9yV8Ju8fHAIPJkAtO5xB4mU_k
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDExODI2LCJpYXQiOjE3MDc5MjUzNjYsImp0aSI6IjZmNmQ1MDE4N2M2ZTQwMmE5ODUyNjg2YzI2NDY3NjgzIiwidXNlcl9pZCI6Mn0.v-FFkvB9w7VtP0D3s9EylyOOqsKkC51tCvig3DHOpws
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDY1MTQ5LCJpYXQiOjE3MDc5Nzg2ODksImp0aSI6IjUwODdlZmZhZWUzMDQzOGFiYzZlOGY3ZDZkMTY0YjFjIiwidXNlcl9pZCI6Mn0.3LSeq1cX2HVPJnLk2W9skj-b67ynWl__gxWD8MsFay0
 
 {
-    
+    "no_of_persons":4
 }
 
 ###
