@@ -8,7 +8,7 @@ media
 */__pycache__
 # C extensions
 *.so
-
+test.rest
 # Distribution / packaging
 .Python
 build/

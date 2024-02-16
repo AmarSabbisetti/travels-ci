@@ -1,53 +1,77 @@
-
-# Create your tests here.
-from django.test import TestCase
-from django.urls import reverse
+from rest_framework.test import APITestCase,APIClient
 from rest_framework import status
-from rest_framework.test import APIClient
+from django.urls import reverse
+from django.contrib.auth.models import User
+from .models import User
+#from .urls import . 
 
-class UserRegisterTestCase(TestCase):
-    def test_user_register(self):
+class UserRegisterTestCase(APITestCase):
+    def test_user_register_success(self):
         client = APIClient()
-        url = reverse('user-register')
         data = {
-            'username': 'test_user',
-            'email': 'test@example.com',
-            'password': 'password123'
+            "email": "test1@example.com",
+            "password": "password123"
         }
-        response = client.post(url, data)
+        
+        response = client.post('/api/register', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        print(response.status_code)
+        self.assertTrue(User.objects.filter(email=data["email"]).exists())
+        self.assertEqual(response.data['message'], 'USER is created')
 
-class LoginTestCase(TestCase):
-    def test_user_login(self):
+    def test_user_register_invalid_data(self):
         client = APIClient()
-        url = reverse('login')
+        data = {
+            "email": "test@examdsfaple",
+            "password": "password123"
+        }
+
+        response = client.post('/api/register', data, format='json')
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertIn('email', response.data)
+        self.assertFalse(User.objects.filter(email=data.get('email')).exists())
+
+
+class LoginAPITestCase(APITestCase):
+
+    def setUp(self):
+        self.client = APIClient()
+        self.url = '/api/login' 
+
+
+        self.user = User.objects.create_user(email='test@example.com', password='password123')
+
+
+    def test_valid_user_login(self):
         data = {
             'email': 'test@example.com',
-            'password': 'password123'
+            'password': 'password123',
+
         }
-        response = client.post(url, data)
+        response = self.client.post(self.url+'/user', data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertIn('token', response.data)
+        self.assertIn('access', response.data['token'])
+        self.assertEqual(response.data['message'], 'User logged in')
 
-class BlacklistTokenUpdateViewTestCase(TestCase):
-    def test_blacklist_token_update_view(self):
-        client = APIClient()
-        url = reverse('blacklist-token-update')
-        data = {'refresh_token': 'refresh_token_here'}
-        response = client.post(url, data)
-        self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
+    def test_invalid_user_login(self):
+        data = {
+            'email': 'test@example.com',
+            'password': 'wrongpassword',
+        }
+        response = self.client.post(self.url+'/user', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertNotIn('token', response.data)
+        self.assertEqual(response.data['message'], 'Invalid credentials')
 
-class UserPackageViewSetTestCase(TestCase):
-    def test_user_package_list(self):
-        client = APIClient()
-        client.force_authenticate(user=user_instance)  # Assuming you have a user instance for testing
-        url = reverse('user-package-list')
-        response = client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    def test_admin_login(self):
+        data = {
+            'email': 'test@example.com',
+            'password': 'password123',
+        }
+        response = self.client.post(self.url+'/admin', data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertNotIn('token', response.data)
+        self.assertEqual(response.data['message'], 'You are not allowed')
 
-    def test_user_package_retrieve(self):
-        client = APIClient()
-        client.force_authenticate(user=user_instance)  # Assuming you have a user instance for testing
-        url = reverse('user-package-detail', args=[1])  # Assuming the PK is 1
-        response = client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    

@@ -6,12 +6,13 @@ from rest_framework.permissions import IsAdminUser,IsAuthenticated, IsAuthentica
 from .permissions import ReadOnly,IsAdminOrReadOnly,IsAdmin_Obj
 from django.http import Http404
 from datetime import datetime 
+from rest_framework.exceptions import PermissionDenied
 
 
 
 class PackagesListCreate(generics.ListCreateAPIView):
     """user read only Admin to read and write"""
-    permission_classes = [IsAdminUser|ReadOnly]
+    permission_classes = [IsAdminUser|IsAuthenticated]
     queryset=Packages.active_packages.all()
     serializer_class=PackagesSerializer
     filter_backends=[filters.OrderingFilter,filters.SearchFilter]
@@ -20,7 +21,10 @@ class PackagesListCreate(generics.ListCreateAPIView):
     ordering=['id']
     
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        if self.request.user.is_superuser:
+            serializer.save(creator=self.request.user)
+        else:
+            raise PermissionDenied("You are not authorized to perform this action. Only admin users can create packages.")
 
 class CompletePackageDetail(generics.RetrieveAPIView):
     permission_classes = [IsAdminUser|ReadOnly]

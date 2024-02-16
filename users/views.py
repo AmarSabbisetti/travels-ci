@@ -32,8 +32,8 @@ class UserRegister(APIView):
         if serializer.is_valid(raise_exception=True):
             user=serializer.create(clean_data)
             if user:
-                return Response({'messeage':'USER is created'},status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message':'USER is created'},status.HTTP_201_CREATED)
+        return Response({'message':'Invalid data'},status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
     """Login view for both admin and user"""
@@ -75,8 +75,8 @@ class Login(APIView):
                         return Response({'message': "You are not allowed"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     return Response({'message': "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
-            return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BlacklistTokenUpdateView(APIView):

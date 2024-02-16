@@ -7,17 +7,17 @@ FROM python:3.9.13
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-# create root directory for our project in the container
+CMD apt-get update && apt-get install -y --no-install-recommends git mercurial openssh-client subversion procps && rm -rf /var/lib/apt/lists/*
+RUN python -m pip install --upgrade pip
+
+
 RUN mkdir /travels
-
-# Set the working directory to /music_service
 WORKDIR /travels
+COPY . /travels/
 
-# Copy the current directory contents into the container at /music_service
-ADD . /travels/
-
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+RUN python -m pip install -r requirements.txt
+#COPY ./entrypoint.sh .
+#ENTRYPOINT ["sh", "/app/entrypoint.sh"]
 
 
 

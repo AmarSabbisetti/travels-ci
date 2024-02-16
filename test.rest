@@ -1,11 +1,16 @@
 
-get http://127.0.0.1:8000/api/myjourneys HTTP/1.1
+get http://127.0.0.1:8000/api/packages/ HTTP/1.1
 content-type: application/json
 #Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDExNzI0LCJpYXQiOjE3MDc5MjUyNjQsImp0aSI6ImFlOTM1ZWFhOTBjNzQwOTU5NDUzY2JhMWVlOWMxNDA4IiwidXNlcl9pZCI6MX0.31KDSk1qnPqTu-MS2d9yV8Ju8fHAIPJkAtO5xB4mU_k
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDY1MTQ5LCJpYXQiOjE3MDc5Nzg2ODksImp0aSI6IjUwODdlZmZhZWUzMDQzOGFiYzZlOGY3ZDZkMTY0YjFjIiwidXNlcl9pZCI6Mn0.3LSeq1cX2HVPJnLk2W9skj-b67ynWl__gxWD8MsFay0
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MTUxMjIzLCJpYXQiOjE3MDgwNjQ3NjMsImp0aSI6IjAzYWNkMWM4MTVmNzQyYjdiMTQ0NjYwM2E0NjIwZTI1IiwidXNlcl9pZCI6MX0.BGuS4Rqnq0zQTyqUn4j6K5Jfc5HuE4U3iY0hKsGlPhk
 
 {
-    "no_of_persons":4
+   "name":"dskjfgi",
+   "description":"akdsgjfjlak",
+   "price":250,
+   "start_date":"2024-02-17",
+   "end_date":"2024-02-20",
+   "slots":100
 }
 
 ###
@@ -14,8 +19,8 @@ POST  http://127.0.0.1:8000/api/register HTTP/1.1
 content-type: application/json
 
 {
-    "email": "user@gmail.com",
-    "password": "user@1234"
+    "email": "test13@example.com",
+    "password": "password123"
 }
 
 ###
