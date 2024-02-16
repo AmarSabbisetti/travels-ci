@@ -32,8 +32,8 @@ class UserRegister(APIView):
         if serializer.is_valid(raise_exception=True):
             user=serializer.create(clean_data)
             if user:
-                return Response({'messeage':'USER is created'},status.HTTP_201_CREATED)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+                return Response({'message':'USER is created'},status.HTTP_201_CREATED)
+        return Response({'message':'Invalid data'},status=status.HTTP_400_BAD_REQUEST)
 
 class Login(APIView):
     """Login view for both admin and user"""
@@ -45,7 +45,7 @@ class Login(APIView):
         
         assert validate_email(data)
         assert validate_password(data)
-        print(data)
+      
         serializer = LoginSerializer(data=data)
         
         try:
@@ -55,7 +55,7 @@ class Login(APIView):
                 user = authenticate(username=data['email'], password=data['password'])
                 print(user)
                 if user:
-                    print(user)
+                    #login(user)
                     if user.is_superuser and kwargs.get('type') == 'admin':
                         
                         token = GenerateUserTokens().generate_user_tokens(user)
@@ -75,8 +75,8 @@ class Login(APIView):
                         return Response({'message': "You are not allowed"}, status=status.HTTP_400_BAD_REQUEST)
                 else:
                     return Response({'message': "Invalid credentials"}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
-            return Response({'message': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class BlacklistTokenUpdateView(APIView):
@@ -115,13 +115,13 @@ class ProfileUpdateView(APIView):
 
 
 class AddUserPackage(generics.CreateAPIView):
-    #queryset = User_Packages.objects.all()
+    queryset = User_Packages.objects.all()
     serializer_class = UserPackagesSerializer
     permission_classes = [IsAuthenticated_obj]
 
     def perform_create(self,serializer):
         package_id = self.kwargs['package']
-        package = Packages.objects.filter(package_id=package_id).first()
+        package = Packages.objects.filter(id=package_id).first()
         serializer.save(user=self.request.user,package=package)
         return Response(serializer.data)
 

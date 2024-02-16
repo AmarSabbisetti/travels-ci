@@ -12,10 +12,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 import os
-from dotenv import load_dotenv
-load_dotenv()
-import dj_database_url
-
+#from dotenv import load_dotenv
+#load_dotenv()
+#import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,12 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*o2)*+qwbc_fn0-1!1+_5wfwa8*4%iv60^_ntli%y_bgew7=m1"
+SECRET_KEY ="alksdfhaldjskhoaldngklhladlgi"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -87,31 +87,30 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default":dj_database_url.config(
-        default=os.getenv('DATABASE_URL')
-    )
-    {
-
-        #"ENGINE": "django.db.backends.sqlite3",
-        #"NAME": BASE_DIR / "db.sqlite3",
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-
+""""default":dj_database_url.config(
+        default=os.getenv('DATABASE_URL')
+    )
+""""""
 from dotenv import load_dotenv
 
 dotenv_path = os.path.join(BASE_DIR, '.env')
 load_dotenv(dotenv_path)
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'),
-        'PORT': os.getenv('DATABASE_PORT'),
-    }
-}
+"""
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': os.getenv('DATABASE_NAME'),
+#         'USER': os.getenv('DATABASE_USER'),
+#         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+#         'HOST': os.getenv('DATABASE_HOST'),
+#         'PORT': os.getenv('DATABASE_PORT'),
+#     }
+# }
 
 AUTH_USER_MODEL='users.User'
 
@@ -153,15 +152,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL='/media/'
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS=[
     "http://localhost:3000",
-    "http://localhost:3002"
+    "http://localhost",
+    "http://127.0.0.1",
+    "http://0.0.0.0",
 ]
-
+#CORS_ALLOWED_CREDENTIALS=True
 
 REST_FRAMEWORK={
     'DEFAULT_PERMISSION_CLASSES':[
-        'rest_framework.permissions.AllowAny',
+        'rest_framework.permissions.IsAuthenticated',
     ],
     
     'DEFAULT_AUTHENTICATION_CLASSES': (

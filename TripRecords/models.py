@@ -14,8 +14,8 @@ class User_Packages(models.Model):
     package=models.ForeignKey(Packages,on_delete=models.CASCADE,related_name='deals_packages')
     
     def save(self,*args,**kwargs):
-        self.total_cost=self.package.price_per_person * self.no_of_persons
+        self.total_cost=self.package.price * self.no_of_persons
         super().save(*args,**kwargs)
     
     def __str__(self):
-        return f'{self.user.email} : {self.package.package_name}'
+        return f'{self.user.email} : {self.package.name}'

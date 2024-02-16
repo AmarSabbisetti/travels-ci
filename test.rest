@@ -1,10 +1,16 @@
 
-get  http://127.0.0.1:8000/api/packages/3 HTTP/1.1
+get http://127.0.0.1:8000/api/packages/ HTTP/1.1
 content-type: application/json
-Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA3OTY2MDcwLCJpYXQiOjE3MDc4Nzk2MTAsImp0aSI6ImNhNWU1YTY5MTdkNTRkMWI4NTE5MDg1MDA2YjliM2JjIiwidXNlcl9pZCI6MTJ9.59fZMzg4_KjT8lLozDyBW3lArBqVsrxWnxjaFmJXNmA
+#Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDExNzI0LCJpYXQiOjE3MDc5MjUyNjQsImp0aSI6ImFlOTM1ZWFhOTBjNzQwOTU5NDUzY2JhMWVlOWMxNDA4IiwidXNlcl9pZCI6MX0.31KDSk1qnPqTu-MS2d9yV8Ju8fHAIPJkAtO5xB4mU_k
+Authorization: JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MTUxMjIzLCJpYXQiOjE3MDgwNjQ3NjMsImp0aSI6IjAzYWNkMWM4MTVmNzQyYjdiMTQ0NjYwM2E0NjIwZTI1IiwidXNlcl9pZCI6MX0.BGuS4Rqnq0zQTyqUn4j6K5Jfc5HuE4U3iY0hKsGlPhk
 
 {
-    "no_of_persons":4
+   "name":"dskjfgi",
+   "description":"akdsgjfjlak",
+   "price":250,
+   "start_date":"2024-02-17",
+   "end_date":"2024-02-20",
+   "slots":100
 }
 
 ###
@@ -13,8 +19,8 @@ POST  http://127.0.0.1:8000/api/register HTTP/1.1
 content-type: application/json
 
 {
-    "email": "user5@gmail.com",
-    "password": "user4@1234"
+    "email": "test13@example.com",
+    "password": "password123"
 }
 
 ###
@@ -23,29 +29,35 @@ POST  http://127.0.0.1:8000/api/login/user HTTP/1.1
 content-type: application/json
 
 {
-    "email": "user5@gmail.com",
-    "password": "user4@1234"
+    "email": "user@gmail.com",
+    "password": "user@1234"
 }
 
 ###
 
-POST  http://127.0.0.1:8000/api/login/user HTTP/1.1
+POST  http://127.0.0.1:8000/api/login/admin HTTP/1.1
 content-type: application/json
 
 {
-    "email": "user5@gmail.com",
-    "password": "user4@1234"
+    "email": "admin@admin.com",
+    "password": "admin@123"
 }
 
 ###
 
-GET http://127.0.0.1:8000/api/profile HTTP/1.1
+PUT  http://127.0.0.1:8000/api/profile HTTP/1.1
 content-type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA3OTY4NzEyLCJpYXQiOjE3MDc4ODIyNTIsImp0aSI6ImMzMzI4YzZmZjVkODQ1OGJiZDUwMmRkOWExZDM0MjM4IiwidXNlcl9pZCI6MjN9.1j3EMS9razJYBRHwILt6nP9w3EYk1W4bMbvF-0BGedo
+Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzA4MDExMzQwLCJpYXQiOjE3MDc5MjQ4ODAsImp0aSI6IjA5NDhmZDc5NzE4NzQ4YjE4YjJjNjQ2ZDkxMzJlMzFmIiwidXNlcl9pZCI6MX0.YzUeRvYdV2Q0pM4VgXRt93G9lyOgptoYE8o22Gb9Rok
 
 {
-
+  "first_name": "Admin",
+  "last_name": "Admin",
+  "phone_no": "1234567876",
+  "address": "sdyfutaslbdfi",
+  "detail":"/Users/amar/Desktop/practice/veryacademy/drf2/media/places/default.jpg"
 }
+
+###
 # PUT  http://127.0.0.1:5000/package/update/cd5e37fe-b9f0-4337-bde9-f863bf56a584 HTTP/1.1
 # content-type: application/json
 

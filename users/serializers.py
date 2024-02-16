@@ -57,14 +57,17 @@ class ALLPackagesSerializer(serializers.ModelSerializer):
     
 
 class UserPackagesSerializer(serializers.ModelSerializer):
-    package_name = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
     start_date=serializers.SerializerMethodField()
+    id=serializers.SerializerMethodField()
     class Meta:
         model = User_Packages
-        fields = ['deal_id','package_name','start_date', 'no_of_persons', 'total_cost', 'date','start_date']
+        fields = ['deal_id','name','id','start_date', 'no_of_persons', 'total_cost', 'date','start_date']
         read_only_fields = ['total_cost','user','date','package'] 
     
     def get_start_date(self, obj):
         return obj.package.start_date if obj.package else None
-    def get_package_name(self, obj):
-        return obj.package.package_name if obj.package else None
+    def get_name(self, obj):
+        return obj.package.name if obj.package else None
+    def get_id(self, obj):
+        return obj.package.id if obj.package else None

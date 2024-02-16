@@ -2,30 +2,34 @@ from rest_framework import generics, viewsets, filters
 from .models import Packages,Amenities,Places
 from .serializers import PackagesSerializer,AmenitiesSerializer,PlacesSerializer,BasicDetailPackageSerializer,CompletePackagesSerializer
 from rest_framework.response import Response
-from rest_framework.permissions import IsAdminUser,IsAuthenticated, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAdminUser,IsAuthenticated, IsAuthenticatedOrReadOnly,AllowAny
 from .permissions import ReadOnly,IsAdminOrReadOnly,IsAdmin_Obj
 from django.http import Http404
 from datetime import datetime 
+from rest_framework.exceptions import PermissionDenied
 
 
 
 class PackagesListCreate(generics.ListCreateAPIView):
     """user read only Admin to read and write"""
-    permission_classes = [IsAdminUser|ReadOnly]
+    permission_classes = [IsAdminUser|IsAuthenticated]
     queryset=Packages.active_packages.all()
     serializer_class=PackagesSerializer
     filter_backends=[filters.OrderingFilter,filters.SearchFilter]
     search_fields= ['^name','^description']
     ordering_fields=['start_date','end_date','name']
-    ordering=['start_date']
+    ordering=['id']
     
     def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+        if self.request.user.is_superuser:
+            serializer.save(creator=self.request.user)
+        else:
+            raise PermissionDenied("You are not authorized to perform this action. Only admin users can create packages.")
 
 class CompletePackageDetail(generics.RetrieveAPIView):
-    #permission_classes = [IsAdminUser|ReadOnly]
+    permission_classes = [IsAdminUser|ReadOnly]
     queryset = Packages.objects.all()
-    serializer_class =PackagesSerializer(many=True)
+    serializer_class =CompletePackagesSerializer
     #lookup_kwargs=['id']
 
 class PackagesDetail(generics.RetrieveUpdateDestroyAPIView):#PackageRetrieveUpdateDestroyAPIView
@@ -71,7 +75,7 @@ class AmenityDetail(generics.RetrieveUpdateDestroyAPIView):
 
 class PlacesList(generics.ListCreateAPIView):
     permission_classes=[IsAdminOrReadOnly]
-    #queryset=Amenities.objects.all()
+    queryset=Places.objects.all()
     serializer_class=PlacesSerializer
 
     def get_queryset(self):
@@ -87,7 +91,7 @@ class PlacesList(generics.ListCreateAPIView):
 
 class PlaceDetail(generics.RetrieveUpdateDestroyAPIView):
     """API endpoint to manage places for a certain package."""
-    permission_classes=[IsAdminUser]
+    permission_classes=[AllowAny]
     queryset = Places.objects.all()
     serializer_class = PlacesSerializer
     lookup_url_kwarg = 'place_id'

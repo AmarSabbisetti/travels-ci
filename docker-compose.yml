@@ -1,0 +1,12 @@
+version: '3.9'
+
+services:
+  web:
+    image: amarsabbisetti/drftravels:latest
+    env_file:
+      - .env
+    volumes:
+      - .:/travels
+    ports:
+        - "8000:8000"
+  
