@@ -17,7 +17,7 @@ COPY . /travels/
 
 RUN python -m pip install -r requirements.txt
 #COPY ./entrypoint.sh .
-#ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+ENTRYPOINT ["sh", "entrypoint.sh"]
 
 
 
